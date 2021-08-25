@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title> Calculator by JavaScript</title>
+	<link rel="icon" href="images/url_logo.png"height="10px" width="10px">
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+	
+	<style type="text/css">
+		
+		body{
+			background-color: #000;
+			margin:0;
+			padding:0;
+		}
+
+		#advance-cal{
+			display:none;
+		}
+		.toggle-btn1{
+			height:30px;
+			border:none;
+			font-family: Times New Roman;
+			font-size:17px;
+			padding: 3px;
+			background-color:#660035;
+			border: 1px solid #ff0084;
+			color:#fff;
+			border-radius: 20px;
+		}
+		.toggle-btn1 i{
+			font-size:10px;
+		}
+		.center{
+			margin-top:50px;
+			margin-bottom:25px;
+			display: flex;
+			justify-content: center;
+		}
+		.basic table, .advance table{
+			background-color: #999999;
+			padding:5px 20px 20px 20px;
+			border:5px ridge gray;
+			border-radius: 5px;
+			box-shadow: 0 0 15px #262626;
+			margin-bottom: 50px;
+		}
+		.advance table input{
+			margin-right:10px;
+			margin-bottom: 5px;
+		}
+		.basic table input{
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
+		input{
+			border-radius:4px;
+			background-color: #ccffff;
+			border: 2px inset #00cccc;
+
+		}
+		button{
+			border-radius: 4px;
+			background-color: #ccffff;
+			border: 2px inset #00cccc;
+		}
+		.num{
+			width:40px;
+			height:30px;
+		}
+		input[name = display]{
+			width:95%;
+			text-align:right;
+			height:30px;
+			background-color: #ffffb3;
+			border:2px inset #cc0000;
+			border-radius: 5px;
+		}
+		input[name = answer]{
+			background-color: #ffffb3;
+			width:95%;
+			height:30px;
+			text-align: right;
+			border-radius: 5px;
+			border:2px inset #cc0000;			
+		}
+		.s-c-t-b{
+			width:40px;
+			height:30px;
+		}
+
+		#main{
+  			display: flex;
+  			flex-wrap: wrap;
+  			justify-content:center;
+  			line-height: 30px;
+  			color:#000066;
+		}
+
+		
+	</style>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="public/styles.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.messagestore.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.fallbacks.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.language.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.parser.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.emitter.js"></script>
+    <script src="public/js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
+    <script src="public/antixss.js" type="text/javascript"></script>
+    <script>
+        $( document ).ready(function() {
+            $.i18n().load( {
+                en: {
+                    "welcome": "Welcome.",
+                    "name": "name",
+                    "what_is_your_name": "What is your name?",
+                    "hello": "Hello $1",
+                    "added_to_database": "Hello $1, I've added you to the database!",
+                    "database_contents": "Database contents: "
+                },
+                ja: {
+                    "welcome": "ようこそ。",
+                    "name": "名前",
+                    "what_is_your_name": "お名前を教えてください。",
+                    "hello": "こんにちは $1",
+                    "added_to_database": "こんにちは $1 さん、あなたをデータベースに追加しました。",
+                    "database_contents": "データベースの内容: "
+                }
+            } );
+            $('body').i18n();
+            $('#user_name').attr("placeholder", $.i18n('name') );
+        });
+        </script>
+</head>
+
+<body>
+   <!--  <div class="container" id="container">
+        <h1 data-i18n="welcome"></h1> 
+        <div id="nameInput" class="input-group-lg center-block helloInput">
+            <p class="lead" data-i18n="what_is_your_name"></p>
+            <input id="user_name" type="text" class="form-control" aria-describedby="sizing-addon1" value="" />
+        </div>
+        <p id="response" class="lead text-center"></p>
+
+        <p id="databaseNames" class="lead text-center"></p>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <span><a href="https://console.bluemix.net/docs/tutorials/index.html" target="_blank">Looking for more tutorials?</a></span>
+        </div>
+    </footer>
+ -->
+
+    	
+
+<div id="basic-cal">
+			<div class="center">
+				<button type="button"class="toggle-btn1" onclick="advance()">Go to advance mode <i class="fa fa-eercast"></i></button>
+			</div>
+
+<form name="calc" class="basic">
+	<table align="center">
+		<tr>
+			<td colspan="4" style="text-align:right; font-family:'Monoton',cursive; color:#fff; font-size:15px;"><i><span style="color:#cc0000;">e</span>CALCULATE</i></td>
+		</tr>
+		<tr>
+			<td colspan = "4"><input type="text" name="answer" style="margin-top:15px; margin-bottom: 15px;" placeholder="0" maxlength="50" readonly></td>
+		</tr>
+		<tr>
+			<td><input type="button" class="num" value="7" onclick="calc.answer.value += '7'"></td>
+			<td><input type="button" class="num" value="8" onclick="calc.answer.value += '8'"></td>
+			<td><input type="button" class="num" value="9" onclick="calc.answer.value += '9'"></td>
+        	<td><button type="button" class="num" value="backspace" onclick="backspace()"><img src="back.jpg" width="20px" height="20px" style="padding-top:3px;"></button></td>		
+    	</tr>
+    	<tr>
+			<td><input type="button" class="num" value="4" onclick="calc.answer.value += '4'"></td>
+			<td><input type="button" class="num" value="5" onclick="calc.answer.value += '5'"></td>
+			<td><input type="button" class="num" value="6" onclick="calc.answer.value += '6'"></td>
+			<td><input type="button" class="num" value="*" onclick="calc.answer.value += '*'"></td>
+    	</tr>
+    	<tr>
+			<td><input type="button" class="num" value="1" onclick="calc.answer.value += '1'"></td>
+			<td><input type="button" class="num" value="2" onclick="calc.answer.value += '2'"></td>
+			<td><input type="button" class="num" value="3" onclick="calc.answer.value += '3'"></td>
+			<td><input type="button" class="num" value="/" onclick="calc.answer.value += '/'"></td>
+    	</tr>
+    	<tr>
+			<td><input type="button" class="num" value="." onclick="calc.answer.value += '.'"></td>
+			<td><input type="button" class="num" value="0" onclick="calc.answer.value += '0'"></td>
+			<td><input type="button" class="num" style="font-size:20px;" value="-" onclick="calc.answer.value += '-'"></td>
+			<td rowspan="2"><input type="button" style="height:60px; width:40px;background-color:#006600; font-size:25px; font-weight:bold; color:#fff; border:1px outset #ffff99;" value="=" onclick="calc.answer.value = eval(calc.answer.value) "></td>
+    	</tr>
+    	<tr>
+			<td colspan="2"><button type="button" style="width:100%;height:30px;padding-top:4px; background-color:#cc0000; font-weight:bold; color:#fff; border-color: gray;"value="allclear" onclick="calc.answer.value = '' ">CLEAR</button></td>
+			<td><input type="button" class="num" value="+" onclick="calc.answer.value += '+'"></td>
+    	</tr>
+	</table>
+
+</form>
+</div>	
+
+
+<div id="advance-cal">
+		<div class="center">
+			<button type="button" class="toggle-btn1" onclick="basic()">Go to basic mode <i class="fa fa-eercast"></i></button>
+		</div>
+
+<form name="cal" class="advance">
+<table align="center">
+	<tr>
+			<td colspan="5" style="text-align:right; font-family:'Monoton',cursive; color:#fff; font-size:15px;"><i><span style="color:#cc0000;">e</span>CALCULATE</i></td>
+		</tr>
+		
+	<tr>
+		<td colspan="5"><input type="text" style="margin-top:15px; margin-bottom:20px;" name="display" placeholder="0" readonly maxlength="50"></td>
+	</tr>
+	<tr>
+		<td><button type="button" class="s-c-t-b" value="sin" onclick="sin()">sin</button></td>
+		<td><button type="button" class="s-c-t-b" value="cos" onclick="cos()">cos</button></td>
+		<td><button type="button" class="s-c-t-b" value="tan" onclick="tan()">tan</button></td>
+	    <td colspan="2"><button type="button" class="s-c-t-b" style="width:95px;" value="back" onclick="back()"><img src="back.jpg" width="20px" height="20px" style="padding-top:-5px; margin-bottom:-4px;"></button></td>
+	</tr>
+	<tr>
+		<td><button type="button" class="num" value="x^2" onclick="square()">x<sup>2</sup></button></td>
+		<td><button type="button" class="num" value="x^3" onclick="cube()">x<sup>3</sup></button></td>
+		<td><button type="button" class="num" value="^" OnClick="cal.display.value+='^'">x<sup>y</sup></button></td> 		
+		<td><button type="button" class="num" value="sqrt2" onclick="sqrt2()">&#8730;</button></td>
+		<td><button type="button" class="num" value="sqrt3" onclick="sqrt3()">&#8731;</button></td>
+	</tr>
+	<tr>
+		<td><button type="button" class="num" value="log" onclick="log()">log</button></td> 
+		<td><button type="button" class="num" value="ln" onclick="ln()">ln</button></td>
+		<td><button type="button" class="num" value="pi" onclick="pi()">&#120587;</button></td>
+		<td><button type="button" class="num" onclick="abs()">|x|</button></td>		
+		<td><button type="button" class="num"onclick="cal.display.value = Math.E ">e</button></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="num" value="7" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="8" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="9" onclick="number(value)"></td>
+		<td><input class="num" type="button" value="n!" OnClick="cal.display.value+='!'"></td>		
+		<td><input class="num" type="button" value="ne" OnClick="cal.display.value+='e'"></td> 
+	</tr>
+	<tr>
+		<td><input type="button" class="num" value="4" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="5" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="6" onclick="number(value)"></td>		
+		<td><input type="button" class="num" value="+" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="/" onclick="number(value)"></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="num" value="1" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="2" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="3" onclick="number(value)"></td>
+		<td><input type="button" class="num" style="font-size:20px;" value="-" onclick="number(value)"></td>		
+		<td><input type="button" class="num" value="*" onclick="number(value)"></td>
+	</tr>
+	<tr>
+		<td><input type="button" class="num" value="." onclick="number(value)"></td>
+		<td><input type="button" class="num" value="0" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="(" onclick="number(value)"></td>
+		<td><input type="button" class="num" value=")" onclick="number(value)"></td>
+		<td><input type="button" class="num" value="%" OnClick="cal.display.value+='%'"></td> 
+	</tr>
+	<tr>
+		<td colspan="3"><button type="button" style="width:100%; height:30px; background-color:#cc0000; font-weight:bold; color:#fff; border-color: gray;" onclick="cal.display.value = '' " class="clear">Clear</button></td>		
+		<td colspan="2"><button type="button" style="width:95px; height:30px; background-color:#006600; font-size:25px; font-weight:bold; color:#fff; border:1px outset #ffff99;" value="=" OnClick="calculate(this.form)"class="equal">=</button></td>
+	</tr>
+
+</table>
+</form>
+</div>
+
+
+
+<div id="main">
+  <div id = "showdate" style="font-weight:bold; color:#cc0000;"></div>
+  <div style="color: #cc0000;"> &nbsp; &nbsp; | &nbsp; &nbsp; <i> Designed by &nbsp; @ SAYANTI </i> &nbsp; &nbsp; | &nbsp; &nbsp; </div>
+  <div id = "showtime" style="font-weight:bold; color:#cc0000;"></div>
+</div>
+
+
+<script type="text/javascript">
+	function backspace(){
+		var b = calc.answer.value;
+		calc.answer.value = b.substr(0,b.length-1);
+	}
+
+
+	
+	function number(value){
+		cal.display.value += value;
+	}
+	
+	function sin(){
+		cal.display.value = Math.sin(cal.display.value * Math.PI / 180);
+	}
+	function cos(){
+		cal.display.value = Math.cos(cal.display.value * Math.PI / 180);
+	}
+	function tan(){
+		cal.display.value = Math.tan(cal.display.value);
+	}
+	function log(){
+		cal.display.value = Math.log10(cal.display.value);
+	}
+	function ln(){
+		cal.display.value = Math.log(cal.display.value);
+	}
+	function pi(){
+		cal.display.value = Math.PI;
+	}
+	function abs(){
+		cal.display.value = Math.abs(cal.display.value);
+	}
+	function square(){
+		cal.display.value = Math.pow(cal.display.value , 2);
+	}
+	function cube(){
+		cal.display.value = Math.pow(cal.display.value , 3);
+	}
+	function sqrt2(){
+		cal.display.value = Math.pow(cal.display.value , 1/2);
+	}
+	function sqrt3(){
+		cal.display.value = Math.pow(cal.display.value , 1/3);
+	}
+	function back(){
+		var a = cal.display.value;
+		cal.display.value = a.substr(0,a.length-1);
+	}
+
+	function calculate(cal) { 
+              
+            // Check  ! character then calculate factorial of number 
+
+            if(cal.display.value.includes("!")) { 
+                  
+                size = cal.display.value.length; 
+                n = Number(cal.display.value.substring(0, size-1)); 
+                f = 1; 
+                  
+                for(i = 2; i <= n; i++) 
+                    f = f*i; 
+                cal.display.value = f; 
+            } 
+              
+            // calculate the % of number 
+            else if(cal.display.value.includes("%")) { 
+                  
+                size = cal.display.value.length; 
+                n = Number(cal.display.value.substring(0, size-1)); 
+                cal.display.value = n/100 + '%'; 
+            } 
+
+            else if(cal.display.value.includes("e")) { 
+                  
+                size = cal.display.value.length; 
+                n = Number(cal.display.value.substring(0, size-1)); 
+                	cal.display.value = n*Math.E; 
+
+            } 
+            
+
+             else if(cal.display.value.indexOf("^") > -1) { 
+          		base = cal.display.value.substring(0, cal.display.value.indexOf('^'));
+          		power = cal.display.value.substring(cal.display.value.indexOf('^') + 1);
+          		cal.display.value = eval('Math.pow(' + base + ',' + power + ')');
+          	}
+
+            else
+                cal.display.value = eval(cal.display.value); 
+        } 
+
+    var x = document.getElementById("basic-cal");
+    var y = document.getElementById("advance-cal");
+    function advance(){
+    	x.style.display = "none"; 
+    	y.style.display = "block";
+    }    
+    function basic(){
+    	x.style.display = "";
+    	y.style.display = "none";
+    }
+	
+
+	var realdate = new Date();
+
+		// date setting.......
+
+		var day = realdate.getUTCDay();
+		var date = realdate.getUTCDate();
+		var month = realdate.getUTCMonth();
+		var year = realdate.getUTCFullYear();
+
+		// Universal Coordinated Time(UTC) is the time set by the world time standard.....
+
+		var days = ["Sunday ","Monday ","Tuesday ","Wednesday ","Thursday ","Friday ","Saturday "];
+		var months = ["Jan ", "Feb ", "Mar ", "Apr ", "May ", "Jun ", "Jul ", "Aug ", "Sep ", "Oct ", "Nov ", "Dec "];
+		document.getElementById("showdate").innerHTML = (days[day] + ", " + months[month] + date  + ", " + year);
+
+	
+		// time setting.......
+
+		var autosec = setInterval(clock,1000);
+		function clock()
+		{
+			var realdate = new Date();
+			var time = realdate.toLocaleTimeString();
+			document.getElementById("showtime").innerHTML = (time);
+		}
+	
+</script>
+
+</body>
+
+
+</html>
+
+
+    <!-- <script>
+    	//Submit data when enter key is pressed
+        $('#user_name').keydown(function(e) {
+        	var name = $('#user_name').val();
+            if (e.which == 13 && name.length > 0) { //catch Enter key
+            	//POST request to API to create a new visitor entry in the database
+                $.ajax({
+				  method: "POST",
+				  url: "./api/visitors",
+				  contentType: "application/json",
+				  data: JSON.stringify({name: name })
+				})
+                .done(function(data) {
+                    if(data && data.name){
+                        if(data._id)
+                            $('#response').html($.i18n('added_to_database', AntiXSS.sanitizeInput(data.name)));
+                        else
+                            $('#response').html($.i18n('hello', AntiXSS.sanitizeInput(data.name))); 
+                    }
+                    else {
+                        $('#response').html(AntiXSS.sanitizeInput(data));
+                    }
+                    $('#nameInput').hide();
+                    getNames();
+                });
+            }
+        });
+
+        //Retrieve all the visitors from the database
+        function getNames(){
+          $.get("./api/visitors")
+              .done(function(data) {
+                  if(data.length > 0) {
+                    data.forEach(function(element, index) {
+                      data[index] = AntiXSS.sanitizeInput(element)
+                    });
+                    $('#databaseNames').html($.i18n('database_contents') + JSON.stringify(data));
+                  }
+              });
+          }
+
+          //Call getNames on page load.
+          getNames();
+
+
+    </script>
+ -->
